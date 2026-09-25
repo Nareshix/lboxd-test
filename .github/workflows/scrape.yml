@@ -20,7 +20,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -29,7 +28,7 @@ jobs:
 
       - name: Run Scraper
         run: |
-          python scraper.py # Replace with your python script name
+          python scraper.py # Replace with your python script name if different
 
       - name: Commit and push changes
         run: |
@@ -44,3 +43,9 @@ jobs:
             git commit -m "Auto-update Letterboxd popular lists [skip ci]"
             git push
           fi
+
+      - name: Upload CSV as an Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: letterboxd-popular-lists
+          path: all_popular_lists_entries.csv
