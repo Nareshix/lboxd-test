@@ -1,0 +1,13 @@
+{
+    "workbench.editorAssociations": {
+        "*.copilotmd": "vscode.markdown.preview.editor",
+        "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc": "default",
+        "*.qrc": "qt-core.qrcEditor",
+        "*.db": "sqlite-viewer.view",
+        "git-rebase-todo": "gitlens.rebase",
+        "*.parquet": "duckdb.dataFileViewer",
+        "*.tsv": "duckdb.dataFileViewer",
+        "*.xlsx": "duckdb.dataFileViewer",
+        "*.csv": "duckdb.dataFileViewer"
+    }
+}

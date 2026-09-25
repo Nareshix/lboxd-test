@@ -1,0 +1,46 @@
+name: Scrape Letterboxd Popular Lists
+
+on:
+  workflow_dispatch: # Allows you to manually trigger it with a button click
+  schedule:
+    # Runs automatically every Sunday at 00:00 UTC (optional)
+    - cron: '0 0 * * 0'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to commit and push the CSV
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install curl_cffi
+
+      - name: Run Scraper
+        run: |
+          python scraper.py # Replace with your python script name
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Only commit if the CSV actually changed
+          git add all_popular_lists_entries.csv
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Auto-update Letterboxd popular lists [skip ci]"
+            git push
+          fi
